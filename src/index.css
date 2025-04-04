@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+button {
+  cursor: pointer;
+}
+
+@theme {
+  --color-primary: #407487;
+  --color-secondary: #559795;
+  --color-tertiary: #62afcb;
+  --color-tertiary-light: #a0def419;
+}
+
+.max-w-8xl {
+  max-width: 90rem;
+}
+
+* {
+  scroll-padding-top: 2rem;
+}
