@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function HowItWorks() {
+export default function HowWorks() {
   return (
     <div id="how-it-works" className="py-12 bg-white">
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">

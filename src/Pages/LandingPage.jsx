@@ -10,6 +10,7 @@ import Tech from "../components/LandingPage/Tech";
 import Footer from "../components/LandingPage/Footer";
 import AvailableGreenbonds from "../components/LandingPage/AvailableGreenbonds";
 import AvailableGreenCredit from "../components/LandingPage/AvailableGreenCredit";
+import HowWorks from "../components/LandingPage/HowWorks";
 
 const LandingPage = () => {
   return (
@@ -24,7 +25,7 @@ const LandingPage = () => {
       <AvailableGreenbonds />
       <AvailableGreenCredit />
       <Goals />
-      <HowItWorks />
+      <HowWorks/>
 
       <CTA />
       <Tech />
