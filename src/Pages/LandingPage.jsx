@@ -10,7 +10,6 @@ import Tech from "../components/LandingPage/Tech";
 import Footer from "../components/LandingPage/Footer";
 import AvailableGreenbonds from "../components/LandingPage/AvailableGreenbonds";
 import AvailableGreenCredit from "../components/LandingPage/AvailableGreenCredit";
-import HowItWorks from "../Components/LandingPage/HowItWorks";
 
 const LandingPage = () => {
   return (
