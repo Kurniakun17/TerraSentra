@@ -25,6 +25,7 @@ const GreenCreditDetail = () => {
   const { fetchCredits, creditDetail } = useGreenCreditStore();
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
+  const percentage = Math.floor((creditDetail.fundRaised / creditDetail.fundRequired) * 100) + "%";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -268,7 +269,7 @@ const GreenCreditDetail = () => {
                 </div>
                 <div className="flex justify-between mt-1">
                   <span className="text-sm font-medium text-teal-700">
-                    {creditDetail.fundRaised}% terdanai
+                    {percentage}% funded
                   </span>
                   <span className="text-sm text-gray-500">
                     {formatCurrency(creditDetail.fundRaised)} /{" "}
@@ -335,7 +336,7 @@ const GreenCreditDetail = () => {
               <span className="font-bold text-xl">
                 {roiMetrics.total}
               </span>{" "}
-              dalam 3 tahun.
+              in 3 Years.
             </p>
           </div>
         </div>

@@ -4,10 +4,14 @@ import { Search, MapPin, Filter } from "lucide-react";
 import Navbar from "../components/LandingPage/Navbar";
 import { GreenBondCard } from "../components/shared/GreenBondCard";
 import useGreenCreditStore from "../store/greenCreditStore";
+import { GreenCreditCard } from "../components/GreenCredit/GreenCreditCard";
 
 const GreenCreditMarketplace = () => {
-  const { credits: listCredits, fetchFeaturedCredits, loading } =
-    useGreenCreditStore();
+  const {
+    credits: listCredits,
+    fetchFeaturedCredits,
+    loading,
+  } = useGreenCreditStore();
 
   const [filteredCredits, setFilteredCredits] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -15,7 +19,9 @@ const GreenCreditMarketplace = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   // Extract unique locations from the credits data
-  const locations = [...new Set(listCredits?.map(credit => credit.location) || [])];
+  const locations = [
+    ...new Set(listCredits?.map((credit) => credit.location) || []),
+  ];
 
   // Fetch credits on component mount
   useEffect(() => {
@@ -25,7 +31,7 @@ const GreenCreditMarketplace = () => {
   // Filter credits based on search term and selected location
   useEffect(() => {
     if (!listCredits) return;
-    
+
     let result = [...listCredits];
 
     if (searchTerm) {
@@ -54,7 +60,7 @@ const GreenCreditMarketplace = () => {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       <div className="w-full h-16"></div>
-      {/* Hero Section */}
+
       <div className="bg-primary text-white pt-16 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-3xl md:text-4xl font-bold">
@@ -68,11 +74,9 @@ const GreenCreditMarketplace = () => {
         </div>
       </div>
 
-      {/* Search and Filter Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6">
         <div className="bg-white shadow-md rounded-lg p-4">
           <div className="flex flex-col md:flex-row gap-4">
-            {/* Search */}
             <div className="relative flex justify-center flex-grow">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Search className="h-5 w-5 text-gray-400" />
@@ -86,7 +90,6 @@ const GreenCreditMarketplace = () => {
               />
             </div>
 
-            {/* Filter Button */}
             <button
               onClick={toggleFilter}
               className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md bg-white shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50"
@@ -96,7 +99,6 @@ const GreenCreditMarketplace = () => {
             </button>
           </div>
 
-          {/* Filter Panel */}
           {isFilterOpen && (
             <div className="mt-4 p-4 border-t border-gray-200">
               <div className="flex flex-col md:flex-row md:items-center justify-between">
@@ -133,7 +135,6 @@ const GreenCreditMarketplace = () => {
         </div>
       </div>
 
-      {/* Green Bonds Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {loading ? (
           <div className="text-center py-12">
@@ -148,7 +149,7 @@ const GreenCreditMarketplace = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredCredits.map((credit) => (
-                <GreenBondCard key={credit.id} bond={credit} />
+                <GreenCreditCard credit={credit} />
               ))}
             </div>
           </>
