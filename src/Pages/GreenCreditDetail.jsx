@@ -19,13 +19,16 @@ import Navbar from "../components/LandingPage/Navbar";
 import { useParams } from "react-router-dom";
 import useGreenCreditStore from "../store/greenCreditStore";
 import { formatCurrency } from "../utils/functions";
+import Footer from "../components/LandingPage/Footer";
 
 const GreenCreditDetail = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const { fetchCredits, creditDetail } = useGreenCreditStore();
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
-  const percentage = Math.floor((creditDetail.fundRaised / creditDetail.fundRequired) * 100) + "%";
+  const percentage =
+    Math.floor((creditDetail.fundRaised / creditDetail.fundRequired) * 100) +
+    "%";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -118,9 +121,9 @@ const GreenCreditDetail = () => {
         "Carbon Neutral Shipping",
         "Local Community Partnerships",
       ],
-      growthRate: 28, // percentage
+      growthRate: 28,
       projectedSales: "Rp 1.250.000.000",
-      marketShare: 8.5, // percentage
+      marketShare: 8.5,
     },
     insight: {
       investmentAmount: "Rp 1.000.000",
@@ -177,12 +180,12 @@ const GreenCreditDetail = () => {
     const monthlyReturn = (investmentAmount * (creditDetail.roi / 100)) / 12;
     const annualReturn = investmentAmount * (creditDetail.roi / 100);
     const totalReturn = annualReturn * 3; // Assuming 3-year investment period
-    
+
     return {
       monthly: formatCurrency(monthlyReturn),
       annual: formatCurrency(annualReturn),
       total: formatCurrency(totalReturn),
-      bep: Math.ceil(investmentAmount / monthlyReturn)
+      bep: Math.ceil(investmentAmount / monthlyReturn),
     };
   };
 
@@ -269,7 +272,7 @@ const GreenCreditDetail = () => {
                 </div>
                 <div className="flex justify-between mt-1">
                   <span className="text-sm font-medium text-teal-700">
-                    {percentage}% funded
+                    {percentage} funded
                   </span>
                   <span className="text-sm text-gray-500">
                     {formatCurrency(creditDetail.fundRaised)} /{" "}
@@ -333,10 +336,8 @@ const GreenCreditDetail = () => {
           <div className="bg-white/20 p-4 rounded-lg">
             <p className="text-lg">
               Dividen projection that you will get{" "}
-              <span className="font-bold text-xl">
-                {roiMetrics.total}
-              </span>{" "}
-              in 3 Years.
+              <span className="font-bold text-xl">{roiMetrics.total}</span> in 3
+              Years.
             </p>
           </div>
         </div>
@@ -345,7 +346,7 @@ const GreenCreditDetail = () => {
           <div className="bg-white p-4 rounded-lg shadow-sm">
             <div className="flex items-center mb-3">
               <DollarSign className="w-5 h-5 text-teal-700 mr-2" />
-              <h3 className="font-medium">Potensi ROI & Dividen</h3>
+              <h3 className="font-medium">ROI & Dividen Potential</h3>
             </div>
             <div className="grid grid-cols-3 gap-2 text-center">
               <div className="bg-teal-50 p-2 rounded">
@@ -373,14 +374,12 @@ const GreenCreditDetail = () => {
             <div className="mt-4">
               <div className="flex justify-between text-sm mb-1">
                 <span className="text-gray-500">
-                  Estimasi Pendapatan Bulanan:
+                  Monthly Income Estimation:
                 </span>
                 <span className="font-medium">{roiMetrics.monthly}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-gray-500">
-                  Estimasi Pendapatan Tahunan:
-                </span>
+                <span className="text-gray-500">Yearly Income Estimation:</span>
                 <span className="font-medium">{roiMetrics.annual}</span>
               </div>
             </div>
@@ -426,23 +425,29 @@ const GreenCreditDetail = () => {
                     </span>
                   </div>
                 </div>
-                
+
                 <div className="mb-4">
-                  <p className="text-sm font-medium mb-2">Environmental Impact</p>
+                  <p className="text-sm font-medium mb-2">
+                    Environmental Impact
+                  </p>
                   <div className="grid grid-cols-2 gap-2">
                     <div className="bg-teal-50 p-2 rounded flex flex-col items-center">
                       <CloudSun className="w-4 h-4 text-teal-700 mb-1" />
                       <p className="text-xs text-gray-500">CO₂ Reduction</p>
-                      <p className="text-lg font-bold text-teal-700">{umkmData.technology.co2Reduction}</p>
+                      <p className="text-lg font-bold text-teal-700">
+                        {umkmData.technology.co2Reduction}
+                      </p>
                     </div>
                     <div className="bg-teal-50 p-2 rounded flex flex-col items-center">
                       <Globe className="w-4 h-4 text-teal-700 mb-1" />
                       <p className="text-xs text-gray-500">Water Saving</p>
-                      <p className="text-lg font-bold text-teal-700">{umkmData.technology.waterSaving}</p>
+                      <p className="text-lg font-bold text-teal-700">
+                        {umkmData.technology.waterSaving}
+                      </p>
                     </div>
                   </div>
                 </div>
-                
+
                 <div>
                   <p className="text-sm font-medium mb-2">Certifications</p>
                   <div className="flex flex-wrap gap-2">
@@ -457,7 +462,7 @@ const GreenCreditDetail = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div>
                 <p className="text-sm font-medium mb-2">Implemented Systems</p>
                 <div className="space-y-2">
@@ -465,7 +470,9 @@ const GreenCreditDetail = () => {
                     <div key={index} className="bg-gray-50 p-2 rounded">
                       <div className="flex justify-between">
                         <p className="text-sm font-medium">{system.name}</p>
-                        <p className="text-xs text-teal-700">ROI: {system.roi}%</p>
+                        <p className="text-xs text-teal-700">
+                          ROI: {system.roi}%
+                        </p>
                       </div>
                       <div className="mt-1 w-full bg-gray-200 rounded-full h-2">
                         <div
@@ -473,7 +480,9 @@ const GreenCreditDetail = () => {
                           style={{ width: `${system.efficiency}%` }}
                         ></div>
                       </div>
-                      <p className="text-xs text-gray-500 text-right mt-1">Efficiency: {system.efficiency}%</p>
+                      <p className="text-xs text-gray-500 text-right mt-1">
+                        Efficiency: {system.efficiency}%
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -486,23 +495,28 @@ const GreenCreditDetail = () => {
               <BarChart3 className="w-5 h-5 text-teal-700 mr-2" />
               <h3 className="font-medium">Marketing Plan</h3>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <div className="mb-4">
                   <div className="flex justify-between items-center mb-2">
                     <p className="text-sm font-medium">Market Channels</p>
                     <p className="text-sm text-teal-700">
-                      Growth Rate: <span className="font-bold">{umkmData.marketingPlan.growthRate}%</span>
+                      Growth Rate:{" "}
+                      <span className="font-bold">
+                        {umkmData.marketingPlan.growthRate}%
+                      </span>
                     </p>
                   </div>
-                  
+
                   <div className="space-y-2">
                     {umkmData.marketingPlan.channels.map((channel, index) => (
                       <div key={index} className="bg-gray-50 p-2 rounded">
                         <div className="flex justify-between">
                           <p className="text-sm">{channel.name}</p>
-                          <p className="text-sm font-medium">{channel.percentage}%</p>
+                          <p className="text-sm font-medium">
+                            {channel.percentage}%
+                          </p>
                         </div>
                         <div className="mt-1 w-full bg-gray-200 rounded-full h-2">
                           <div
@@ -514,33 +528,41 @@ const GreenCreditDetail = () => {
                     ))}
                   </div>
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-2 mb-3">
                   <div className="bg-teal-50 p-2 rounded text-center">
                     <p className="text-xs text-gray-500">Projected Sales</p>
-                    <p className="text-lg font-bold text-teal-700">{umkmData.marketingPlan.projectedSales}</p>
+                    <p className="text-lg font-bold text-teal-700">
+                      {umkmData.marketingPlan.projectedSales}
+                    </p>
                   </div>
                   <div className="bg-teal-50 p-2 rounded text-center">
                     <p className="text-xs text-gray-500">Market Share</p>
-                    <p className="text-lg font-bold text-teal-700">{umkmData.marketingPlan.marketShare}%</p>
+                    <p className="text-lg font-bold text-teal-700">
+                      {umkmData.marketingPlan.marketShare}%
+                    </p>
                   </div>
                 </div>
               </div>
-              
+
               <div>
                 <p className="text-sm font-medium mb-2">Marketing Strategies</p>
                 <div className="space-y-2">
                   {umkmData.marketingPlan.strategies.map((strategy, index) => (
-                    <div key={index} className="flex items-center space-x-2 bg-gray-50 p-2 rounded">
+                    <div
+                      key={index}
+                      className="flex items-center space-x-2 bg-gray-50 p-2 rounded"
+                    >
                       <LineChart className="w-4 h-4 text-teal-700" />
                       <p className="text-sm">{strategy}</p>
                     </div>
                   ))}
                 </div>
-                
+
                 <div className="mt-4 p-3 bg-teal-50 rounded">
                   <p className="text-sm font-medium text-center text-teal-700">
-                    Marketing focuses on sustainable positioning and traceable sourcing to capture premium market segments.
+                    Marketing focuses on sustainable positioning and traceable
+                    sourcing to capture premium market segments.
                   </p>
                 </div>
               </div>
@@ -571,48 +593,7 @@ const GreenCreditDetail = () => {
         </div>
       </main>
 
-      <footer className="bg-teal-800 text-white py-8 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="font-bold text-lg mb-4">TerraSentra</h3>
-              <p className="text-teal-100 text-sm">
-                Platform pendanaan untuk UMKM berkelanjutan yang berfokus pada
-                pelestarian lingkungan dan pertumbuhan ekonomi hijau.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-bold mb-4">Tentang Kami</h3>
-              <ul className="space-y-2 text-teal-100 text-sm">
-                <li>Tentang TerraSentra</li>
-                <li>Cara Kerja</li>
-                <li>Karir</li>
-                <li>Blog</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-bold mb-4">Bantuan</h3>
-              <ul className="space-y-2 text-teal-100 text-sm">
-                <li>Pusat Bantuan</li>
-                <li>Kontak</li>
-                <li>FAQ</li>
-                <li>Syarat & Ketentuan</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-bold mb-4">Hubungi Kami</h3>
-              <ul className="space-y-2 text-teal-100 text-sm">
-                <li>info@terrasentra.id</li>
-                <li>+62 21 1234 5678</li>
-                <li>Jakarta, Indonesia</li>
-              </ul>
-            </div>
-          </div>
-          <div className="mt-8 pt-4 border-t border-teal-700 text-center text-teal-100 text-sm">
-            © {new Date().getFullYear()} TerraSentra. All rights reserved.
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
