@@ -1,61 +1,288 @@
+
+
 export const greenBonds = [
-    {
-      id: 1,
-      name: "Green Forest Project",
-      description:
-        "A reforestation project aimed at restoring degraded lands and increasing biodiversity.",
-      photos: [
-        "/images/green-forest-1.jpg",
-        "/images/green-forest-2.jpg",
-        "/images/green-forest-3.jpg",
-      ],
-      carbonAbsorbed: 5000,
-      socialImpact:
-        "Provides employment to local communities and improves air quality.",
-      orderBook: [
-        { buyer: "Investor A", amount: 10000 },
-        { buyer: "Investor B", amount: 5000 },
-      ],
-      location: "Tangerang, Indonesia",
-  
-      roi: "8% annually",
-      fundRequired: 100000,
-      fundRaised: 75000,
+  {
+    id: 2,
+    name: "Solar Energy Initiative",
+    description:
+      "A project to install solar panels in rural areas to provide clean energy.",
+    photos: ["/images/solar-energy-1.jpg", "/images/solar-energy-2.jpg"],
+    carbonAbsorbed: 2000,
+    currentCarbonPrice: 300000,
+    carbonPerMillion: 0.25,
+    socialImpact: [
+      {
+        title: "Employment",
+        description:
+          "Creates jobs in installation and maintenance of solar panels.",
+        impcatHighlight: "450+ Jobs",
+      },
+      {
+        title: "Community",
+        description:
+          "Provides clean energy to rural areas, improving quality of life.",
+        impcatHighlight: "+30% income",
+      },
+      {
+        title: "Health",
+        description: "40% better air quality, 2,000+ with clean water",
+        impcatHighlight: "2,000+ People",
+      },
+      {
+        title: "Education",
+        description: "12 schools supported, 500+ scholarships",
+        impcatHighlight: "500+ Students",
+      },
+    ],
+    aqi: {
+      score: 75,
+      variable: {
+        so2: 80,
+        no2: 90,
+        co: 15,
+      },
     },
-    {
-      id: 2,
-      name: "Solar Energy Initiative",
-      description:
-        "A project to install solar panels in rural areas to provide clean energy.",
-      photos: ["/images/solar-energy-1.jpg", "/images/solar-energy-2.jpg"],
-      carbonAbsorbed: 2000,
-      socialImpact:
-        "Improves access to electricity and reduces reliance on fossil fuels.",
-      location: "Tangerang, Indonesia",
-      orderBook: [
-        { buyer: "Investor C", amount: 20000 },
-        { buyer: "Investor D", amount: 15000 },
-      ],
-      roi: "10% annually",
-      fundRequired: 80000,
-      fundRaised: 35000,
+    location: "Tangerang, Indonesia",
+    pollutantMap: [
+      { name: "Tarik", value: 50 },
+      { name: "Cikupa", value: 60 },
+      { name: "Cisauk", value: 70 },
+      { name: "Curug", value: 80 },
+    ],
+    orderBook: [
+      {
+        id: 1,
+        user: "Bambang S",
+        type: "buy",
+        amount: 5,
+        value: 10000000,
+        timestamp: "2025-04-04T08:30:00",
+      },
+    ],
+    roi: "10%",
+    fundRequired: 80000,
+    fundRaised: 35000,
+    additionalInfo: [
+      {
+        title: "Project Timeline",
+        value: [
+          { date: "2024-01-01", description: "Project Kickoff" },
+          { date: "2024-06-01", description: "Installation Phase" },
+          { date: "2025-01-01", description: "Completion" },
+        ],
+      },
+
+      {
+        title: "Tree Types",
+        value: [
+          { name: "Mahogany", quantity: 2000 },
+          { name: "Teak", quantity: 1500 },
+          { name: "Bamboo", quantity: 3000 },
+        ],
+      },
+      {
+        title: "Achivements & Recognition",
+        value: [
+          {
+            name: "Green Project Award 2024",
+            description: "Best Reforestation Project",
+          },
+          {
+            name: "Sustainable Development Goals Recognition",
+            description: "For Community Impact",
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    id: 2,
+    name: "Solar Energy Initiative",
+    description:
+      "A project to install solar panels in rural areas to provide clean energy.",
+    photos: ["/images/solar-energy-1.jpg", "/images/solar-energy-2.jpg"],
+    carbonAbsorbed: 2000,
+    currentCarbonPrice: 300000,
+    carbonPerMillion: 0.25,
+    socialImpact: [
+      {
+        title: "Employment",
+        description:
+          "Creates jobs in installation and maintenance of solar panels.",
+        impcatHighlight: "450+ Jobs",
+      },
+      {
+        title: "Community",
+        description:
+          "Provides clean energy to rural areas, improving quality of life.",
+        impcatHighlight: "+30% income",
+      },
+      {
+        title: "Health",
+        description: "40% better air quality, 2,000+ with clean water",
+        impcatHighlight: "2,000+ People",
+      },
+      {
+        title: "Education",
+        description: "12 schools supported, 500+ scholarships",
+        impcatHighlight: "500+ Students",
+      },
+    ],
+    aqi: {
+      score: 75,
+      variable: {
+        so2: 80,
+        no2: 90,
+        co: 15,
+      },
     },
-    {
-      id: 3,
-      name: "Wind Farm Development",
-      description:
-        "A wind farm project that generates renewable energy and reduces carbon emissions.",
-      photos: ["/images/wind-farm-1.jpg", "/images/wind-farm-2.jpg"],
-      carbonAbsorbed: 3000,
-      socialImpact:
-        "Creates jobs in the renewable energy sector and promotes sustainable practices.",
-      orderBook: [
-        { buyer: "Investor E", amount: 30000 },
-        { buyer: "Investor F", amount: 25000 },
-      ],
-      roi: "9% annually",
-      fundRequired: 120000,
-      fundRaised: 90000,
+    location: "Tangerang, Indonesia",
+    pollutantMap: [
+      { name: "Tarik", value: 50 },
+      { name: "Cikupa", value: 60 },
+      { name: "Cisauk", value: 70 },
+      { name: "Curug", value: 80 },
+    ],
+    orderBook: [
+      {
+        id: 1,
+        user: "Bambang S",
+        type: "buy",
+        amount: 5,
+        value: 10000000,
+        timestamp: "2025-04-04T08:30:00",
+      },
+    ],
+    roi: "10%",
+    fundRequired: 80000,
+    fundRaised: 35000,
+    additionalInfo: [
+      {
+        title: "Project Timeline",
+        value: [
+          { date: "2024-01-01", description: "Project Kickoff" },
+          { date: "2024-06-01", description: "Installation Phase" },
+          { date: "2025-01-01", description: "Completion" },
+        ],
+      },
+
+      {
+        title: "Tree Types",
+        value: [
+          { name: "Mahogany", quantity: 2000 },
+          { name: "Teak", quantity: 1500 },
+          { name: "Bamboo", quantity: 3000 },
+        ],
+      },
+      {
+        title: "Achivements & Recognition",
+        value: [
+          {
+            name: "Green Project Award 2024",
+            description: "Best Reforestation Project",
+          },
+          {
+            name: "Sustainable Development Goals Recognition",
+            description: "For Community Impact",
+          },
+        ],
+      },
+    ],
+  },
+
+  {
+    id: 2,
+    name: "Solar Energy Initiative",
+    description:
+      "A project to install solar panels in rural areas to provide clean energy.",
+    photos: ["/images/solar-energy-1.jpg", "/images/solar-energy-2.jpg"],
+    carbonAbsorbed: 2000,
+    currentCarbonPrice: 300000,
+    carbonPerMillion: 0.25,
+    socialImpact: [
+      {
+        title: "Employment",
+        description:
+          "Creates jobs in installation and maintenance of solar panels.",
+        impcatHighlight: "450+ Jobs",
+      },
+      {
+        title: "Community",
+        description:
+          "Provides clean energy to rural areas, improving quality of life.",
+        impcatHighlight: "+30% income",
+      },
+      {
+        title: "Health",
+        description: "40% better air quality, 2,000+ with clean water",
+        impcatHighlight: "2,000+ People",
+      },
+      {
+        title: "Education",
+        description: "12 schools supported, 500+ scholarships",
+        impcatHighlight: "500+ Students",
+      },
+    ],
+    aqi: {
+      score: 75,
+      variable: {
+        so2: 80,
+        no2: 90,
+        co: 15,
+      },
     },
-  ];
-  
+    location: "Tangerang, Indonesia",
+    pollutantMap: [
+      { name: "Tarik", value: 50 },
+      { name: "Cikupa", value: 60 },
+      { name: "Cisauk", value: 70 },
+      { name: "Curug", value: 80 },
+    ],
+    orderBook: [
+      {
+        id: 1,
+        user: "Bambang S",
+        type: "buy",
+        amount: 5,
+        value: 10000000,
+        timestamp: "2025-04-04T08:30:00",
+      },
+    ],
+    roi: "10%",
+    fundRequired: 80000,
+    fundRaised: 35000,
+    additionalInfo: [
+      {
+        title: "Project Timeline",
+        value: [
+          { date: "2024-01-01", description: "Project Kickoff" },
+          { date: "2024-06-01", description: "Installation Phase" },
+          { date: "2025-01-01", description: "Completion" },
+        ],
+      },
+
+      {
+        title: "Tree Types",
+        value: [
+          { name: "Mahogany", quantity: 2000 },
+          { name: "Teak", quantity: 1500 },
+          { name: "Bamboo", quantity: 3000 },
+        ],
+      },
+      {
+        title: "Achivements & Recognition",
+        value: [
+          {
+            name: "Green Project Award 2024",
+            description: "Best Reforestation Project",
+          },
+          {
+            name: "Sustainable Development Goals Recognition",
+            description: "For Community Impact",
+          },
+        ],
+      },
+    ],
+  },
+];

@@ -20,17 +20,36 @@ export default function Navbar() {
             <div className="hidden sm:ml-10 sm:flex sm:space-x-8">
               <div
                 className="relative"
-                onMouseEnter={() => setIsFeaturesOpen(true)}
-                onMouseLeave={() => setIsFeaturesOpen(false)}
+                onMouseEnter={() => {
+                  setIsFeaturesOpen(true);
+
+                  if (window.dropdownTimeout) {
+                    clearTimeout(window.dropdownTimeout);
+                    window.dropdownTimeout = null;
+                  }
+                }}
+                onMouseLeave={() => {
+                  window.dropdownTimeout = setTimeout(() => {
+                    setIsFeaturesOpen(false);
+                  }, 300);
+                }}
               >
-                <div
-                  
-                  className="border-transparent text-gray-500 hover:text-primary inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-                >
+                <div className="border-transparent text-gray-500 hover:pointer hover:text-primary inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                   Features
                 </div>
                 {isFeaturesOpen && (
-                  <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-10">
+                  <div
+                    className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 z-10"
+                    onMouseEnter={() => {
+                      if (window.dropdownTimeout) {
+                        clearTimeout(window.dropdownTimeout);
+                        window.dropdownTimeout = null;
+                      }
+                    }}
+                    onMouseLeave={() => {
+                      setIsFeaturesOpen(false);
+                    }}
+                  >
                     <a
                       href="/potential-regions"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -44,10 +63,16 @@ export default function Navbar() {
                       Green Bond Marketplace
                     </a>
                     <a
-                      href="/green-credit-marketplace"
+                      href="/greencredit-marketplace"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                     >
                       Green Credit Marketplace
+                    </a>
+                    <a
+                      href="/carbon-offset-marketplace"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      Carbon Offset Marketplace
                     </a>
                   </div>
                 )}

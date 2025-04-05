@@ -4,4 +4,6 @@ const investmentTypeOptions = [
     { value: 'aggressive', label: 'Aggressive (High Risk)', description: 'Focus on maximum growth with higher risk' }
 ];
 
-export { investmentTypeOptions };
+const APIURL = "https://terrasentragcloud-243480441181.asia-southeast2.run.app"
+
+export { investmentTypeOptions, APIURL };

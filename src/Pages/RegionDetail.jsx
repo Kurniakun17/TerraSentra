@@ -5,13 +5,15 @@ import Navbar from "../components/LandingPage/Navbar";
 import "leaflet/dist/leaflet.css";
 import ROICalculator from "../components/shared/ROICalculator";
 import {
+  calculateEnvironmentalScore,
   getScoreBgClass,
   getScoreColor,
   getScoreRating,
 } from "../utils/functions";
+import { APIURL } from "../constant/type";
 
 const RegionDetail = () => {
-  const { regionName } = useParams();
+  let { regionName } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const [regionData, setRegionData] = useState(null);
@@ -24,12 +26,12 @@ const RegionDetail = () => {
   const fetchData = async () => {
     setLoading(true);
     await fetch(
-      `https://terrasentragcloud-243480441181.asia-southeast2.run.app/get-infrastructure/${regionName}?risk_level=${risk_level}`
+      `${APIURL}/get-infrastructure/${regionName}?risk_level=${risk_level}`
     )
       .then((response) => response.json())
       .then((data) => {
         setData(data);
-        console.log(data);
+        
       })
       .finally(() => setLoading(false));
   };
@@ -47,6 +49,7 @@ const RegionDetail = () => {
       .then((data) => {
         setGeoJsonData(data);
 
+        regionName = regionName == "Dki Jakarta" ? "Jakarta Raya" : regionName;
         const regionFeature = data.features.find(
           (feature) => feature.properties.name === regionName
         );
@@ -155,8 +158,11 @@ const RegionDetail = () => {
 
   const style = (feature) => {
     const provinceName = feature.properties.name;
-    if (provinceName === regionName && regionData) {
-      return regionStyle(data.investment_score);
+
+    const tempName = regionName == "Dki Jakarta" ? "Jakarta Raya" : regionName;
+
+    if (provinceName == tempName && regionData) {
+      return regionStyle(data.ai_investment_score);
     }
     return {
       fillColor: "#d1d5db",
@@ -248,7 +254,7 @@ const RegionDetail = () => {
       <div className="max-w-8xl mx-auto px-3 py-4">
         <div className="flex items-center mb-4">
           <button
-            onClick={() => navigate("/potential-region")}
+            onClick={() => navigate("/potential-regions")}
             className="text-tertiary hover:underline mr-3"
           >
             &larr; Back to Potential Region
@@ -258,15 +264,15 @@ const RegionDetail = () => {
           {regionData.name} Investment Profile
           <span
             className={`ml-3 px-3 py-1 text-sm ${
-              data.investment_score >= 70
+              data.ai_investment_score > 35
                 ? "bg-green-100 text-green-800"
-                : data.investment_score >= 50
+                : data.ai_investment_score >= 30 && data.ai_investment_score <= 35
                 ? "bg-yellow-100 text-yellow-800"
                 : "bg-red-100 text-red-800"
             } rounded-full`}
           >
-            Score: {data.investment_score} (
-            {getScoreRating(data.investment_score)})
+            Score: {data.ai_investment_score} (
+            {getScoreRating(data.ai_investment_score)})
           </span>
         </h1>
 
@@ -300,7 +306,6 @@ const RegionDetail = () => {
               </h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Poverty Index - Numeric Format */}
                 <div className="bg-tertiary-light p-4 border border-green-200 rounded-lg">
                   <h3 className="font-medium mb-2">Poverty Index</h3>
                   <div className="text-center">
@@ -332,7 +337,6 @@ const RegionDetail = () => {
                   </div>
                 </div>
 
-                {/* Environmental Condition - Numeric Format */}
                 <div className="bg-tertiary-light p-4 border flex flex-col justify-between border-green-200 rounded-lg">
                   <h3 className="font-medium mb-2">
                     Renewable Energy Potential
@@ -347,7 +351,6 @@ const RegionDetail = () => {
                   </p>
                 </div>
 
-                {/* Renewable Energy Potential - String Format */}
                 <div className="bg-tertiary-light p-4 border border-green-200 rounded-lg">
                   <h3 className="font-medium mb-2">Environmental Condition</h3>
                   <div className="space-y-2">
@@ -361,16 +364,15 @@ const RegionDetail = () => {
                     </div>
                     <div className="flex justify-between text-sm">
                       <span>Vegetation:</span>
-                      <span className="font-medium">{data.evi}</span>
+                      <span className="font-medium">{data.ndvi}</span>
                     </div>
                     <div className="border-t pt-1 flex justify-between font-medium">
                       <span>Environmental Score:</span>
-                      <span>{data.score_breakdown.environmental_score}%</span>
+                      <span>{calculateEnvironmentalScore(data)}%</span>
                     </div>
                   </div>
                 </div>
 
-                {/* Green Infrastructure - String Format */}
                 <div className="bg-tertiary-light p-4 border flex flex-col justify-between border-green-200 rounded-lg">
                   <h3 className="font-medium mb-2">Green Infrastructure</h3>
                   <div className="text-center">
@@ -390,7 +392,7 @@ const RegionDetail = () => {
             </div>
 
             {/* Investment Simulation Section */}
-            <ROICalculator regionData={regionData} />
+            {/* <ROICalculator regionData={regionData} /> */}
           </div>
 
           <div className="lg:col-span-1">
@@ -403,13 +405,13 @@ const RegionDetail = () => {
                   <div className="w-full h-4 bg-gray-200 rounded-full">
                     <div
                       className={`h-4 rounded-full ${getScoreBgClass(
-                        data.investment_score
+                        data.ai_investment_score
                       )}`}
-                      style={{ width: `${data.investment_score}%` }}
+                      style={{ width: `${data.ai_investment_score * 2}%` }}
                     ></div>
                   </div>
                   <span className="ml-3 text-2xl font-bold">
-                    {data.investment_score}
+                    {data.ai_investment_score}
                   </span>
                 </div>
                 <p className="text-sm mt-2 text-gray-600">
@@ -446,14 +448,6 @@ const RegionDetail = () => {
                 </ul>
               </div>
 
-              <div className="bg-tertiary-light p-3 border border-green-200 rounded-lg mb-4">
-                <h3 className="font-medium text-sm">Estimated ROI</h3>
-                <p className="text-xl font-bold text-tertiary">
-                  {data.roi.annual_return_rate}%{" "}
-                  <span className="text-sm font-normal">per year</span>
-                </p>
-              </div>
-
               <button
                 onClick={handleInvestNow}
                 className="w-full py-3 bg-tertiary hover:bg-tertiary/90 text-white font-medium rounded-lg transition duration-200 flex items-center justify-center"
@@ -472,7 +466,7 @@ const RegionDetail = () => {
                     d="M12 6v6m0 0v6m0-6h6m-6 0H6"
                   />
                 </svg>
-                Invest Now
+                Make Green Project
               </button>
 
               <button className="w-full mt-2 py-2 bg-white border border-tertiary text-tertiary hover:bg-tertiary/10 font-medium rounded-lg transition duration-200">

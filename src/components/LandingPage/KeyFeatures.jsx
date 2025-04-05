@@ -1,4 +1,4 @@
-import { Map, TrendingUp, Users } from "lucide-react";
+import { DollarSign, Map, TrendingUp, Users } from "lucide-react";
 import React from "react";
 
 export default function KeyFeatures() {
@@ -191,7 +191,7 @@ export default function KeyFeatures() {
               <div className="flex-1 mt-10 lg:mt-0">
                 <div className="bg-tertiary-light rounded-lg p-3 flex items-center justify-center h-64 lg:h-full">
                   <img
-                    src="/api/placeholder/400/300"
+                    src="/feature-2.png"
                     alt="Green bond investment"
                     className="rounded-lg shadow-md"
                   />
@@ -283,6 +283,99 @@ export default function KeyFeatures() {
                   <img
                     src="/api/placeholder/400/300"
                     alt="UMKM green financing"
+                    className="rounded-lg shadow-md"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Feature 4 */}
+            <div className="flex flex-col lg:flex-row-reverse">
+              <div className="flex-1">
+                <div className="lg:pl-12">
+                  <div className="flex items-center justify-center h-12 w-12 rounded-md bg-primary text-white mb-5">
+                    <DollarSign className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                    Carbon Offset Marketplace
+                  </h3>
+                  <p className="text-gray-500 mb-6">
+                    Invest in large-scale green projects with returns in the
+                    form of carbon credits and process transparency through
+                    remote sensing.
+                  </p>
+                  <ul className="space-y-4">
+                    <li className="flex">
+                      <div className="flex-shrink-0">
+                        <span className="flex items-center justify-center h-6 w-6 rounded-full bg-tertiary/20 text-primary">
+                          <svg
+                            className="h-4 w-4"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </span>
+                      </div>
+                      <p className="ml-3 text-gray-500">
+                        Project validation using NDVI (Normalized Difference
+                        Vegetation Index)
+                      </p>
+                    </li>
+                    <li className="flex">
+                      <div className="flex-shrink-0">
+                        <span className="flex items-center justify-center h-6 w-6 rounded-full bg-tertiary/20 text-primary">
+                          <svg
+                            className="h-4 w-4"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </span>
+                      </div>
+                      <p className="ml-3 text-gray-500">
+                        Simulation of environmental impact projections
+                        post-project
+                      </p>
+                    </li>
+                    <li className="flex">
+                      <div className="flex-shrink-0">
+                        <span className="flex items-center justify-center h-6 w-6 rounded-full bg-tertiary/20 text-primary">
+                          <svg
+                            className="h-4 w-4"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </span>
+                      </div>
+                      <p className="ml-3 text-gray-500">
+                        Measurable and transparent pollutant reduction
+                        calculations
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div className="flex-1 mt-10 lg:mt-0">
+                <div className="bg-tertiary-light rounded-lg p-3 flex items-center justify-center h-64 lg:h-full">
+                  <img
+                    src="/feature-4.png"
+                    alt="Carbon Offset Marketplace"
                     className="rounded-lg shadow-md"
                   />
                 </div>

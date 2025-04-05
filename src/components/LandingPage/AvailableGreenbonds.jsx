@@ -1,10 +1,10 @@
 import React from "react";
-
-
-import { greenBonds } from "../../data/greenBonds";
 import { GreenBondCard } from "../shared/GreenBondCard";
+import useGreenBondStore from "../../store/greenBondStore";
 
 export default function AvailableGreenbonds() {
+  const { bonds } = useGreenBondStore();
+
   return (
     <div className="py-12">
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -19,7 +19,7 @@ export default function AvailableGreenbonds() {
 
         <div className="mt-4">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {greenBonds.map((bond, index) => (
+            {bonds.map((bond, index) => (
               <GreenBondCard key={`greenbond-${index}`} bond={bond} />
             ))}
           </div>

@@ -6,14 +6,18 @@ import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 
 import Navbar from "../components/LandingPage/Navbar";
 import "leaflet/dist/leaflet.css";
-import { getScoreColor } from "../utils/functions";
+import { formatCurrency, getScoreColor } from "../utils/functions";
+import usePotentialRegion from "../store/potentialRegionStore";
+import { provinceMapping } from "../constant/fallback";
 
 const PotentialRegion = ({ regionScores, geoJsonData }) => {
   const navigate = useNavigate();
-  const { user, userType, logout } = useAuthStore();
+  const { userType } = useAuthStore();
+  const { regions, fetchAllRegion } = usePotentialRegion();
   const { investmentInterests, riskLevel, investmentAmount, investmentTerm } =
     useProfilingStore();
   const [selectedRegion, setSelectedRegion] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const getDarkerColor = (score) => {
     if (score >= 70) return "#059669";
@@ -21,10 +25,52 @@ const PotentialRegion = ({ regionScores, geoJsonData }) => {
     return "#b91c1c";
   };
 
-  // Styling untuk GeoJSON features
+  useEffect(() => {
+    const fetchRegions = async () => {
+      setLoading(true);
+      await fetchAllRegion();
+      setLoading(false);
+    };
+
+    fetchRegions();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="loader"></div>
+      </div>
+    );
+  }
+
   const onEachFeature = (feature, layer) => {
     const provinceName = feature.properties.name;
-    const score = regionScores[provinceName] || 50;
+
+    let regionData;
+
+    regionData = regions.find((region) => region.province === provinceName);
+
+    if (!regionData) {
+      const indonesianNames = provinceMapping[provinceName];
+      if (indonesianNames) {
+        for (const indonesianName of indonesianNames) {
+          regionData = regions.find(
+            (region) => region.province === indonesianName
+          );
+          if (regionData) break;
+        }
+      }
+    }
+
+    if (!regionData) {
+      regionData = regions.find(
+        (region) =>
+          region.province.toLowerCase().includes(provinceName.toLowerCase()) ||
+          provinceName.toLowerCase().includes(region.province.toLowerCase())
+      );
+    }
+
+    const score = regionData?.ai_investment_score || 50;
 
     layer.on({
       mouseover: () => {
@@ -45,8 +91,11 @@ const PotentialRegion = ({ regionScores, geoJsonData }) => {
         });
       },
       click: () => {
-        // Navigasi ke halaman detail region ketika diklik
-        navigate(`/potential-region/${provinceName}?score=${score}`);
+        if (provinceName === "Jakarta Raya") {
+          navigate(`/potential-region/${'Dki Jakarta'}?score=${score}`);
+        } else {
+          navigate(`/potential-region/${provinceName}?score=${score}`);
+        }
       },
     });
 
@@ -57,7 +106,31 @@ const PotentialRegion = ({ regionScores, geoJsonData }) => {
   // Style untuk GeoJSON features
   const style = (feature) => {
     const provinceName = feature.properties.name;
-    const score = regionScores[provinceName] || 50;
+    let regionData;
+
+    regionData = regions.find((region) => region.province === provinceName);
+
+    if (!regionData) {
+      const indonesianNames = provinceMapping[provinceName];
+      if (indonesianNames) {
+        for (const indonesianName of indonesianNames) {
+          regionData = regions.find(
+            (region) => region.province === indonesianName
+          );
+          if (regionData) break;
+        }
+      }
+    }
+
+    if (!regionData) {
+      regionData = regions.find(
+        (region) =>
+          region.province.toLowerCase().includes(provinceName.toLowerCase()) ||
+          provinceName.toLowerCase().includes(region.province.toLowerCase())
+      );
+    }
+
+    const score = regionData?.ai_investment_score || 50;
 
     return {
       fillColor: getScoreColor(score),
@@ -70,10 +143,13 @@ const PotentialRegion = ({ regionScores, geoJsonData }) => {
   };
 
   const getTopRegions = () => {
-    return Object.entries(regionScores)
-      .map(([name, score]) => ({ name, score }))
+    return regions
+      .map((region) => ({
+        name: region.province,
+        score: region.ai_investment_score || 50,
+      }))
       .sort((a, b) => b.score - a.score)
-      .slice(0, 5);
+      .slice(1, 6);
   };
 
   const topRegions = getTopRegions();
@@ -83,7 +159,9 @@ const PotentialRegion = ({ regionScores, geoJsonData }) => {
       <Navbar />
       <div className="w-full h-16"></div>
       <div className="max-w-8xl mx-auto px-3 py-4">
-        <h1 className="text-2xl font-bold text-tertiary mb-4">Potential Region</h1>
+        <h1 className="text-2xl font-bold text-tertiary mb-4">
+          Potential Region
+        </h1>
         <div className="flex gap-2">
           <div className="bg-white w-full p-4 border border-gray-300/80 rounded-lg mb-4">
             <h2 className="text-lg font-medium text-tertiary mb-3">
@@ -106,7 +184,9 @@ const PotentialRegion = ({ regionScores, geoJsonData }) => {
                 <p className="text-xs text-gray-600 mb-1">
                   Estimated Investment Amount
                 </p>
-                <p className="font-medium text-sm">{investmentAmount}</p>
+                <p className="font-medium text-sm">
+                  {formatCurrency(investmentAmount)}
+                </p>
               </div>
               <div className="bg-tertiary-light p-2 border border-green-200 rounded-lg">
                 <p className="text-xs text-gray-600 mb-1">Investment Term</p>
