@@ -20,8 +20,9 @@ const RegionDetail = () => {
   const [geoJsonData, setGeoJsonData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
-  const risk_level = JSON.parse(localStorage.getItem("profiling-storage")).state
-    .riskLevel;
+  const risk_level =
+    JSON.parse(localStorage.getItem("profiling-storage"))?.state?.riskLevel ||
+    "Aggressive";
 
   const fetchData = async () => {
     setLoading(true);
@@ -31,7 +32,6 @@ const RegionDetail = () => {
       .then((response) => response.json())
       .then((data) => {
         setData(data);
-        
       })
       .finally(() => setLoading(false));
   };
@@ -266,7 +266,8 @@ const RegionDetail = () => {
             className={`ml-3 px-3 py-1 text-sm ${
               data.ai_investment_score > 35
                 ? "bg-green-100 text-green-800"
-                : data.ai_investment_score >= 30 && data.ai_investment_score <= 35
+                : data.ai_investment_score >= 30 &&
+                  data.ai_investment_score <= 35
                 ? "bg-yellow-100 text-yellow-800"
                 : "bg-red-100 text-red-800"
             } rounded-full`}
