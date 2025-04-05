@@ -259,11 +259,11 @@ const GreenCreditDetail = () => {
 
               <div className="flex items-center mt-2 text-gray-500">
                 <MapPin className="w-4 h-4 mr-1" />
-                <span>{creditDetail.location}</span>
+                <span>{creditDetail.location || 'Jakarta Raya'}</span>
               </div>
 
               <div className="mt-4">
-                <p className="text-sm text-gray-500">Progress Pendanaan</p>
+                <p className="text-sm text-gray-500">Funding Progress</p>
                 <div className="mt-1 w-full bg-gray-200 rounded-full h-4">
                   <div
                     className="bg-teal-700 h-4 rounded-full"
