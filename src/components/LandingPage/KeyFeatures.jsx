@@ -281,7 +281,7 @@ export default function KeyFeatures() {
               <div className="flex-1 mt-10 lg:mt-0">
                 <div className="bg-tertiary-light rounded-lg p-3 flex items-center justify-center h-64 lg:h-full">
                   <img
-                    src="/api/placeholder/400/300"
+                    src="/feature-3.png"
                     alt="UMKM green financing"
                     className="rounded-lg shadow-md"
                   />

@@ -14,8 +14,8 @@ const GreenBondMarketplace = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   // Get unique locations from fetched bonds
-  const locations = listBonds 
-    ? [...new Set(listBonds.map(bond => bond.location))]
+  const locations = listBonds
+    ? [...new Set(listBonds.map((bond) => bond.location))]
     : [];
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const GreenBondMarketplace = () => {
   useEffect(() => {
     // Apply filters whenever search terms, location, or bonds list changes
     if (!listBonds) return;
-    
+
     let result = [...listBonds];
 
     if (searchTerm) {

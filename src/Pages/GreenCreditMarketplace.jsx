@@ -3,97 +3,43 @@ import { Search, MapPin, Filter } from "lucide-react";
 
 import Navbar from "../components/LandingPage/Navbar";
 import { GreenBondCard } from "../components/shared/GreenBondCard";
+import useGreenCreditStore from "../store/greenCreditStore";
 
 const GreenCreditMarketplace = () => {
-  const sampleBonds = [
-    {
-      id: 1,
-      name: "Solar Power Plant",
-      description:
-        "Renewable energy project to reduce carbon emissions through solar technology.",
-      location: "Jakarta, Indonesia",
-      fundRaised: 750000000,
-      fundRequired: 1000000000,
-    },
-    {
-      id: 2,
-      name: "Mangrove Restoration",
-      description:
-        "Ecological restoration project to protect coastal areas and sequester carbon.",
-      location: "Sidoarjo, Indonesia",
-      fundRaised: 450000000,
-      fundRequired: 800000000,
-    },
-    {
-      id: 3,
-      name: "Sustainable Waste Management",
-      description:
-        "Waste-to-energy facility to reduce landfill usage and generate clean energy.",
-      location: "Surabaya, Indonesia",
-      fundRaised: 600000000,
-      fundRequired: 900000000,
-    },
-    {
-      id: 4,
-      name: "Green Transportation Initiative",
-      description:
-        "Electric public transportation network to reduce urban carbon footprint.",
-      location: "Jakarta, Indonesia",
-      fundRaised: 1200000000,
-      fundRequired: 2000000000,
-    },
-    {
-      id: 5,
-      name: "Organic Farming Cooperative",
-      description:
-        "Supporting local farmers in transitioning to sustainable agricultural practices.",
-      location: "Sidoarjo, Indonesia",
-      fundRaised: 320000000,
-      fundRequired: 500000000,
-    },
-    {
-      id: 6,
-      name: "Green Building Retrofit",
-      description:
-        "Upgrading commercial buildings to improve energy efficiency and sustainability.",
-      location: "Surabaya, Indonesia",
-      fundRaised: 850000000,
-      fundRequired: 1200000000,
-    },
-  ];
+  const { credits: listCredits, fetchFeaturedCredits, loading } =
+    useGreenCreditStore();
 
-  const [bonds, setBonds] = useState([]);
-  const [filteredBonds, setFilteredBonds] = useState([]);
+  const [filteredCredits, setFilteredCredits] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const locations = [
-    "Jakarta, Indonesia",
-    "Sidoarjo, Indonesia",
-    "Surabaya, Indonesia",
-  ];
+  // Extract unique locations from the credits data
+  const locations = [...new Set(listCredits?.map(credit => credit.location) || [])];
 
+  // Fetch credits on component mount
   useEffect(() => {
-    setBonds(sampleBonds);
-    setFilteredBonds(sampleBonds);
-  }, []);
+    fetchFeaturedCredits();
+  }, [fetchFeaturedCredits]);
 
+  // Filter credits based on search term and selected location
   useEffect(() => {
-    let result = [...bonds];
+    if (!listCredits) return;
+    
+    let result = [...listCredits];
 
     if (searchTerm) {
-      result = result.filter((bond) =>
-        bond.name.toLowerCase().includes(searchTerm.toLowerCase())
+      result = result.filter((credit) =>
+        credit.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
     if (selectedLocation) {
-      result = result.filter((bond) => bond.location === selectedLocation);
+      result = result.filter((credit) => credit.location === selectedLocation);
     }
 
-    setFilteredBonds(result);
-  }, [searchTerm, selectedLocation, bonds]);
+    setFilteredCredits(result);
+  }, [searchTerm, selectedLocation, listCredits]);
 
   const toggleFilter = () => {
     setIsFilterOpen(!isFilterOpen);
@@ -189,30 +135,38 @@ const GreenCreditMarketplace = () => {
 
       {/* Green Bonds Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {filteredBonds.length > 0 ? (
+        {loading ? (
+          <div className="text-center py-12">
+            <p className="text-lg text-gray-600">Loading green credits...</p>
+          </div>
+        ) : filteredCredits && filteredCredits.length > 0 ? (
           <>
             <div className="mb-4 text-sm text-gray-500">
-              Showing {filteredBonds.length} green bonds
+              Showing {filteredCredits.length} green credits
               {selectedLocation && <span> in {selectedLocation}</span>}
               {searchTerm && <span> matching "{searchTerm}"</span>}
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredBonds.map((bond) => (
-                <GreenBondCard key={bond.id} bond={bond} />
+              {filteredCredits.map((credit) => (
+                <GreenBondCard key={credit.id} bond={credit} />
               ))}
             </div>
           </>
         ) : (
           <div className="text-center py-12">
             <p className="text-lg text-gray-600">
-              No green bonds match your search criteria.
+              {listCredits && listCredits.length > 0
+                ? "No green credits match your search criteria."
+                : "No green credits available."}
             </p>
-            <button
-              onClick={clearFilters}
-              className="mt-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
-            >
-              Clear Filters
-            </button>
+            {(searchTerm || selectedLocation) && (
+              <button
+                onClick={clearFilters}
+                className="mt-4 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+              >
+                Clear Filters
+              </button>
+            )}
           </div>
         )}
       </div>
@@ -221,10 +175,3 @@ const GreenCreditMarketplace = () => {
 };
 
 export default GreenCreditMarketplace;
-[
-  { name: "ciracas", score: 70 },
-  { name: "cibubur", score: 80 },
-  { name: "cileungsi", score: 90 },
-  { name: "cikarang", score: 85 },
-  { name: "cimanggis", score: 75 },
-];
